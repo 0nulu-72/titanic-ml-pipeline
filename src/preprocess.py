@@ -26,7 +26,7 @@ def feature_engineering(df: pd.DataFrame) -> pd.DataFrame:
       - Compute FamilySize and IsAlone
     """
     # Extract Title
-    df['Title'] = df['Name'].str.extract(' ([A-Za-z]+)\.', expand=False)
+    df['Title'] = df['Name'].str.extract(r' ([A-Za-z]+)\.', expand=False)
     df['Title'] = df['Title'].map(title_map).fillna('Rare')
 
     # Family and Alone features
