@@ -7,14 +7,14 @@ from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import OneHotEncoder
 
-# 1. Load preprocessed data
+# Load the preprocessed training DataFrame
 train = pd.read_pickle('data/processed_train.pkl')
 
-# 2. Separate features and target
+# Separate target (y) and features (X)
 y = train['Survived'].astype(int)
 X = train.drop(columns=['Survived', 'PassengerId', 'Name', 'Ticket', 'Cabin', 'Embarked'])
 
-# If Title or other columns present, include them automatically
+# Helper to split columns into numeric vs. categorical
 def get_numeric_and_categorical(df):
     numeric = df.select_dtypes(include=['int64', 'float64']).columns.tolist()
     categorical = df.select_dtypes(include=['object', 'category']).columns.tolist()
@@ -22,7 +22,7 @@ def get_numeric_and_categorical(df):
 
 numeric_features, categorical_features = get_numeric_and_categorical(X)
 
-# 3. Build preprocessing pipeline
+# Build preprocessing pipelines for numeric and categorical data
 numeric_transformer = SimpleImputer(strategy='median')
 categorical_transformer = Pipeline(steps=[
     ('imputer', SimpleImputer(strategy='most_frequent')),
@@ -33,7 +33,7 @@ preprocessor = ColumnTransformer(transformers=[
     ('cat', categorical_transformer, categorical_features)
 ])
 
-# 4. Define model with tuned parameters
+# Define the XGBoost classifier with tuned hyperparameters
 xgb = XGBClassifier(
     n_estimators=1500,
     learning_rate=0.03,
@@ -50,23 +50,23 @@ xgb = XGBClassifier(
     n_jobs=-1
 )
 
-# 5. Create full pipeline
+# Combine preprocessing and model into a single Pipeline
 pipeline = Pipeline(steps=[
     ('preprocessor', preprocessor),
     ('classifier', xgb)
 ])
 
-# 6. Train/validation split
+# Split data into training and validation sets
 X_train, X_valid, y_train, y_valid = train_test_split(
     X, y, test_size=0.2, stratify=y, random_state=1
 )
 
-# 7. 前処理だけ先に適用（NumPy array に変換）
+# Pre-fit preprocessor on training data and transform both sets
 preprocessor.fit(X_train)
 X_train_proc = preprocessor.transform(X_train)
 X_valid_proc = preprocessor.transform(X_valid)
 
-# 8. XGBoost モデルを直接 fit（early stopping 用の eval_set に NumPy 配列を渡す）
+# Fit the XGBoost model with early stopping
 xgb = pipeline.named_steps['classifier']
 xgb.fit(
     X_train_proc, y_train,
@@ -74,12 +74,10 @@ xgb.fit(
     verbose=False
 )
 
-# 9. パイプライン全体を保存する場合は、
-#    前処理器と学習済みモデルをまとめて pickle するか、
-#    再度 Pipeline 経由で joblib.dump してください。
+# Save the preprocessor and trained model to disk
 joblib.dump({'preprocessor': preprocessor, 'model': xgb}, 'models/titanic_model.pkl')
 
-# 10. 最適ラウンドと logloss を確認
+# Report best boosting round and validation log-loss
 best_it = xgb.best_iteration
 best_ll = xgb.evals_result()['validation_1']['logloss'][best_it]
 print(f'Best iteration: {best_it}, Validation LogLoss: {best_ll:.5f}')

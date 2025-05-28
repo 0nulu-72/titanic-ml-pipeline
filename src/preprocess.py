@@ -1,7 +1,6 @@
-# src/preprocess.py
 import pandas as pd
 
-# Title mapping based on titanic_workflow.ipynb logic
+# Title mapping: group honorifics into common or 'Rare'
 title_map = {
     'Mr': 'Mr', 'Mrs': 'Mrs', 'Miss': 'Miss', 'Master': 'Master',
     'Don': 'Rare', 'Rev': 'Rare', 'Dr': 'Rare', 'Mme': 'Mrs',
@@ -12,7 +11,8 @@ title_map = {
 
 def load_data(train_path: str = 'data/train.csv', test_path: str = 'data/test.csv'):
     """
-    Load raw Titanic CSV files into DataFrames.
+    Load raw CSV files into pandas DataFrames.
+       Returns (train, test).
     """
     train = pd.read_csv(train_path)
     test = pd.read_csv(test_path)
@@ -21,15 +21,15 @@ def load_data(train_path: str = 'data/train.csv', test_path: str = 'data/test.cs
 
 def feature_engineering(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Perform exactly the same feature steps as in titanic_workflow.ipynb:
-      - Extract Title from Name and map rare titles
-      - Compute FamilySize and IsAlone
+    Extract and map passenger titles, then create:
+       - FamilySize = SibSp + Parch + 1
+       - IsAlone    = 1 if FamilySize == 1 else 0
     """
-    # Extract Title
+    # Title extraction from Name
     df['Title'] = df['Name'].str.extract(r' ([A-Za-z]+)\.', expand=False)
     df['Title'] = df['Title'].map(title_map).fillna('Rare')
 
-    # Family and Alone features
+    # Family size and alone indicator
     df['FamilySize'] = df['SibSp'] + df['Parch'] + 1
     df['IsAlone']    = (df['FamilySize'] == 1).astype(int)
     return df
@@ -37,7 +37,8 @@ def feature_engineering(df: pd.DataFrame) -> pd.DataFrame:
 
 def fill_missing(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Impute missing Age and Fare with median, matching notebook.
+    Impute numeric columns with median:
+       - Age, Fare
     """
     df['Age']  = df['Age'].fillna(df['Age'].median())
     df['Fare'] = df['Fare'].fillna(df['Fare'].median())
@@ -46,18 +47,23 @@ def fill_missing(df: pd.DataFrame) -> pd.DataFrame:
 
 def preprocess_and_save():
     """
-    Run full pipeline and save processed data to pickle, mirroring notebook steps.
+    Run full preprocessing pipeline:
+       - Load data
+       - Feature engineering
+       - Missing-value imputation
+       - Save processed DataFrames as pickle files
     """
     train, test = load_data()
 
-    # Apply features and imputation
+    # Apply steps to train set
     train = feature_engineering(train)
     train = fill_missing(train)
 
+    # Apply same steps to test set
     test  = feature_engineering(test)
     test  = fill_missing(test)
 
-    # Save to pickle for downstream scripts
+    # Persist for downstream scripts
     train.to_pickle('data/processed_train.pkl')
     test.to_pickle('data/processed_test.pkl')
 
