@@ -50,8 +50,8 @@ python src/evaluate.py
 
 
 🎯 結果サマリ
-Public LB スコア: 0.78947
-Validation LogLoss: 0.40285
+Public LB スコア: 0.77990
+Validation LogLoss: 0.40490
 
 
 🚀 今後の展望
