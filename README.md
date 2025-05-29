@@ -1,10 +1,8 @@
-[![Build Status](https://github.com/onukishunsuke-72/titanic-ml-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/onukishunsuke-72/titanic-ml-pipeline/actions)
+# titanic-ml-pipeline
+
+[![CI](https://github.com/onukishunsuke-72/titanic-ml-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/onukishunsuke-72/titanic-ml-pipeline/actions)
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE)
-[![CI](https://github.com/onukishunsuke-72/titanic-ml-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/onukishunsuke-72/titanic-ml-pipeline/actions/workflows/ci.yml)
-
-
-# Titanic ML Pipeline
 
 このリポジトリは、Kaggle Titanic 生存予測コンペティションを題材にした、機械学習パイプラインを再現・実行可能な形でまとめたものです。
 
