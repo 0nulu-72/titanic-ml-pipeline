@@ -29,6 +29,10 @@ jobs:
       - name: Run preprocessing
         run: python src/preprocess.py
 
-      # 5. 推論＆提出ファイルの生成
+      # 5. モデル学習
+      - name: Train model
+        run: python src/train.py
+
+      # 6. 推論＆提出ファイルの生成
       - name: Run evaluation
         run: python src/evaluate.py
