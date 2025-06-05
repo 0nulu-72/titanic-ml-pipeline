@@ -1,5 +1,10 @@
+# -------- runtime deps --------
 pandas
 numpy
 scikit-learn
 xgboost>=1.7.0
 matplotlib
+
+# ---- dev / CI 用 ----
+ruff==0.2.2         # Linter & formatter
+pytest              # Unit test framework
