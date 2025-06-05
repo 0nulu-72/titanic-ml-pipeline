@@ -32,8 +32,8 @@ jobs:
         run: |
           make all
 
-#      - name: Upload submission artifact
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: submission
-#          path: submission.csv
+      - name: Upload submission artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: submission
+          path: submission.csv
