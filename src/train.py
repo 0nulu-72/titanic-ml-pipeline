@@ -6,7 +6,6 @@ from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import OneHotEncoder
-import os
 
 # 1. 前処理済み学習データを読み込む
 train = pd.read_pickle('data/processed_train.pkl')
