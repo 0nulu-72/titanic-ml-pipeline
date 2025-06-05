@@ -33,7 +33,7 @@ jobs:
           make all
 
       - name: Upload submission artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
           name: submission
           path: submission.csv
