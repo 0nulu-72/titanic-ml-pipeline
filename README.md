@@ -79,7 +79,7 @@ python src/evaluate.py
 - 新たな特徴量（例：FarePerPerson, AgeBin, CabinZone など）の追加
 - LightGBM / CatBoost とのアンサンブル・スタッキング
 - RandomizedSearchCV を用いた網羅的なハイパーパラメータ探索
-- **CI は GitHub Actions で既に構築済み** → 次は**CD（Continuous Deployment）**：  
+- **CI は GitHub Actions で既に構築済み** → 次は**CD（Continuous Deployment）**として、
   Docker コンテナ化＋AWS ECS/EKS または GCP Cloud Run 上への自動デプロイ基盤を整備  
 - MLflow / Streamlit などを使った**実験管理・デモ用 UI**の導入
 
