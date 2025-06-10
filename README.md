@@ -79,7 +79,9 @@ python src/evaluate.py
 - 新たな特徴量（例：FarePerPerson, AgeBin, CabinZone など）の追加
 - LightGBM / CatBoost とのアンサンブル・スタッキング
 - RandomizedSearchCV を用いた網羅的なハイパーパラメータ探索
-- GitHub Actions を使った CI/CD による「前処理→学習→推論」の自動化
+- **CI は GitHub Actions で既に構築済み** → 次は**CD（Continuous Deployment）**：  
+  Docker コンテナ化＋AWS ECS/EKS または GCP Cloud Run 上への自動デプロイ基盤を整備  
+- MLflow / Streamlit などを使った**実験管理・デモ用 UI**の導入
 
 ---
 このプロジェクトは Kaggle Notebook から派生し、モジュール化したスクリプト版パイプラインとして仕上げたものです。
