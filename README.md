@@ -1,10 +1,13 @@
 # titanic-ml-pipeline
 
-[![CI](https://github.com/0nulu-72/titanic-ml-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/0nulu-72/titanic-ml-pipeline/actions)
+[![CI/CD](https://github.com/0nulu-72/titanic-ml-pipeline/actions/workflows/docker.yml/badge.svg)](https://github.com/0nulu-72/titanic-ml-pipeline/actions/workflows/docker.yml)
 [![Python Version](https://img.shields.io/badge/python-3.10-blue?logo=python&logoColor=white)](https://www.python.org)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE)
 
-このリポジトリは、Kaggle Titanic 生存予測コンペティションを題材にした、機械学習パイプラインを再現・実行可能な形でまとめたものです。
+このリポジトリは、GitHub Actions による **Docker イメージの自動ビルド＆Docker Hub への自動プッシュ** を実装しています。  
+Docker Hub: `0nulu/titanic-ml-pipeline:latest`
+
+Kaggle Titanic 生存予測コンペティションを題材にした、機械学習パイプラインを再現・実行可能な形でまとめたものです。
 
 🗂️ **ディレクトリ構成**
 ```
@@ -76,13 +79,10 @@ python src/evaluate.py
 
 
 🚀 今後の展望
-- 新たな特徴量（例：FarePerPerson, AgeBin, CabinZone など）の追加
-- LightGBM / CatBoost とのアンサンブル・スタッキング
+- 必要に応じて新たな特徴量（例：FarePerPerson, AgeBin, CabinZone など）を追加
+- CI/CD を完成させたので、本番環境への自動デプロイ（AWS ECS/EKS, GCP Cloud Run など）を検討
 - RandomizedSearchCV を用いた網羅的なハイパーパラメータ探索
-- **CI は GitHub Actions で既に構築済み** → 次は**CD（Continuous Deployment）** として、
-  Docker コンテナ化＋AWS ECS/EKS または GCP Cloud Run 上への自動デプロイ基盤を整備  
-- MLflow / Streamlit などを使った**実験管理・デモ用 UI**の導入
-
+- MLflow / Streamlit での実験管理・デモ用 UI の導入
 ---
 このプロジェクトは Kaggle Notebook から派生し、モジュール化したスクリプト版パイプラインとして仕上げたものです。
 上記手順をそのまま再現すれば、誰でも同じ結果を得られることを目指しています。
