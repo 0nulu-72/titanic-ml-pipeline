@@ -1,5 +1,6 @@
 import pandas as pd
 import joblib
+from pathlib import Path
 
 # 1. 保存済み前処理器とモデルを読み込む
 artifacts = joblib.load('models/titanic_model.pkl')
@@ -26,5 +27,6 @@ submission = pd.DataFrame({
 })
 
 # 6. CSV ファイルとして保存（インデックスなし）
-submission.to_csv('submission.csv', index=False)
+out_dir = Path("output"); out_dir.mkdir(exist_ok=True)
+submission.to_csv(out_dir / "submission.csv", index=False)
 print(f'Submission saved! ({submission.shape[0]} rows)')
