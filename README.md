@@ -1,4 +1,4 @@
-#　titanic-ml-pipeline
+# titanic-ml-pipeline
 
 [![CI/CD](https://github.com/0nulu-72/titanic-ml-pipeline/actions/workflows/docker.yml/badge.svg)](https://github.com/0nulu-72/titanic-ml-pipeline/actions/workflows/docker.yml)
 [![Python Version](https://img.shields.io/badge/python-3.10-blue?logo=python&logoColor=white)](https://www.python.org)
