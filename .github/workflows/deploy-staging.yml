@@ -10,7 +10,6 @@ on:
 jobs:
   deploy-staging:
     runs-on: ubuntu-latest
-
     steps:
       - name: SSH to staging
         uses: appleboy/ssh-action@v0.1.7
@@ -19,5 +18,12 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            # 1) S3 から最新データを取得
+            aws s3 cp s3://my-titanic-data-bucket-2025/titanic/train.csv /home/ec2-user/data/train.csv
+            aws s3 cp s3://my-titanic-data-bucket-2025/titanic/test.csv  /home/ec2-user/data/test.csv
+
+            # 2) Docker イメージをプル＆実行
             docker pull 0nulu/titanic-ml-pipeline:latest
-            docker run --rm -v /home/ec2-user/data:/app/data 0nulu/titanic-ml-pipeline:latest
+            docker run --rm \
+              -v /home/ec2-user/data:/app/data \
+              0nulu/titanic-ml-pipeline:latest
