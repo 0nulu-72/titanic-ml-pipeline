@@ -27,7 +27,7 @@ submission = pd.DataFrame({
 })
 
 # 6. CSV ファイルとして保存（インデックスなし）
-out_dir = Path("output") 
+out_dir = Path("data")
 out_dir.mkdir(exist_ok=True)
 submission.to_csv(out_dir / "submission.csv", index=False)
 print(f'Submission saved! ({submission.shape[0]} rows)')
