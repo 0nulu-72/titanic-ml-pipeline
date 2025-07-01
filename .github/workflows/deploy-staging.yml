@@ -2,13 +2,16 @@
 name: Deploy to Staging
 
 on:
-  push:
-    branches:
-      - main            # main ブランチに push されたときに実行
+  workflow_run:
+    workflows: ["Build & Push Docker image"]  # CI ワークフロー名を指定
+    types:
+      - completed
   workflow_dispatch:    # 手動トリガー用（必要なら）
 
 jobs:
   deploy-staging:
+    # Build（docker.yml）の成功時だけ実行
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
