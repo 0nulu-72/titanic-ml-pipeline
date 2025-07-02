@@ -1,6 +1,6 @@
 # -------- runtime deps --------
 pandas
-numpy
+numpy<2
 scikit-learn
 xgboost>=1.7.0
 matplotlib

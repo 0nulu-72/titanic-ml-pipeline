@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,6 +27,10 @@ jobs:
       - name: Lint with ruff
         run: |
           ruff .
+
+      - name: Run unit tests with pytest
+        run: |
+          pytest --maxfail=1 --disable-warnings -q
 
       - name: Run Titanic ML pipeline
         run: |
