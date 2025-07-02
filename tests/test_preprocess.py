@@ -1,5 +1,5 @@
 import pandas as pd
-from src.preprocess import load_data, preprocess_and_save
+from src.preprocess import load_data
 
 def test_load_data_can_read_train_and_test(tmp_path, monkeypatch):
     # Kaggle データが data/ にある前提なので、
