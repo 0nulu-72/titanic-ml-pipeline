@@ -1,10 +1,17 @@
 # titanic-ml-pipeline
 
-[![CI/CD](https://github.com/0nulu-72/titanic-ml-pipeline/actions/workflows/docker.yml/badge.svg)](https://github.com/0nulu-72/titanic-ml-pipeline/actions/workflows/docker.yml)
+[![Test](https://github.com/0nulu-72/titanic-ml-pipeline/actions/workflows/test.yml/badge.svg)](https://github.com/0nulu-72/titanic-ml-pipeline/actions/workflows/test.yml) 
+[![Build & Push Docker image](https://github.com/0nulu-72/titanic-ml-pipeline/actions/workflows/build-and-push.yml/badge.svg)](https://github.com/0nulu-72/titanic-ml-pipeline/actions/workflows/build-and-push.yml)
+ [![Deploy to Staging](https://github.com/0nulu-72/titanic-ml-pipeline/actions/workflows/deploy-staging.yml/badge.svg)](https://github.com/0nulu-72/titanic-ml-pipeline/actions/workflows/deploy-staging.yml)
 [![Python Version](https://img.shields.io/badge/python-3.10-blue?logo=python&logoColor=white)](https://www.python.org)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE)
 
-GitHub Actions で **Docker イメージの自動ビルド & Docker Hub への自動プッシュ** を実装しています。  
+このリポジトリでは、GitHub Actions による **CI / Docker イメージのビルド＆プッシュ / ステージング環境への自動デプロイ** を実装しています。
+
+- **test.yml**: `ruff` による Lint ＆ `pytest` による自動テスト  
+- **build-and-push.yml**: Docker イメージのビルド & Docker Hub (`0nulu/titanic-ml-pipeline:latest`) へのプッシュ  
+- **deploy-staging.yml**: S3 から最新データを取得し、ステージング用 EC2 インスタンスへ自動デプロイ
+
 公開イメージ : [`0nulu/titanic-ml-pipeline:latest`](https://hub.docker.com/r/0nulu/titanic-ml-pipeline)
 
 Kaggle *Titanic* 生存予測コンペを題材に、前処理 → 学習 → 推論までを自動化した機械学習パイプラインです。
@@ -110,7 +117,6 @@ Pythonもpipなどの環境構築やgit cloneは一切不要。Docker さえ入�
 
 ## 🚀今後の展望
 - 必要に応じて新たな特徴量（例：FarePerPerson, AgeBin, CabinZone など）を追加
-- CI/CD を完成させたので、本番環境への自動デプロイ（AWS ECS/EKS, GCP Cloud Run など）を検討
 - RandomizedSearchCV を用いた網羅的なハイパーパラメータ探索
 - MLflow / Streamlit での実験管理・デモ用 UI の導入
 
