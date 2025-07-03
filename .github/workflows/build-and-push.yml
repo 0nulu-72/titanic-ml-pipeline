@@ -1,12 +1,14 @@
 name: Build & Push Docker image
 
 on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
+  workflow_run:
+    workflows: ["test"]
+    types: [completed]    # testワークフローが完了したら起動
+  workflow_dispatch:      # 手動実行
 
 jobs:
   build:
+    if: ${{ github.event.workflow_run.conclusion == 'success'}}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
