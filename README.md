@@ -112,7 +112,7 @@ Pythonもpipなどの環境構築やgit cloneは一切不要。Docker さえ入�
 |---------------------|--------:|
 | Public LB スコア     | **0.77990** |
 | Validation LogLoss | **0.40490** |
-<small>※ Kaggle の非決定性や early stopping の挙動によって若干ブレることがあります。</small>
+*※ Kaggle の非決定性や early stopping の挙動によって若干ブレることがあります。*
 
 
 ## 🚀今後の展望
