@@ -92,14 +92,23 @@ python src/evaluate.py
 
 ### ②🐳Docker 実行 ― 依存ゼロ・git clone も不要
 ```bash
-# 1. 最新イメージを取得（ソースコードも含む）
+# 1. 最新イメージを取得（ソースコードも含む）※Linux / Windows
 docker pull 0nulu/titanic-ml-pipeline:latest
 
-# 2. data/ をマウントして一連処理を実行
+# 1. 最新イメージを取得（ソースコードも含む）※Mac
+docker pull --platform linux/amd64 0nulu/titanic-ml-pipeline:latest
+
+# 2. data/ をマウントして一連処理を実行 ※Linux / Windows
 docker run --rm \
   -v "$(pwd)/data:/app/data" \
   0nulu/titanic-ml-pipeline:latest
   # => data/ に processed_*.pkl & submission.csv が出力される
+
+# 2. data/ をマウントして一連処理を実行 ※Mac
+docker run --rm \
+  --platform linux/amd64 \
+  -v "$PWD/data:/app/data" \
+  0nulu/titanic-ml-pipeline:latest
 ```
 ポイント
 Pythonもpipなどの環境構築やgit cloneは一切不要。Docker さえ入っていれば上記２行で完了します。
