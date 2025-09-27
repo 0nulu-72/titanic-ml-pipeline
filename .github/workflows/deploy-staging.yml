@@ -32,12 +32,19 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            # 共通
+            export AWS_REGION=ap-northeast-1
+            mkdir -p /home/ec2-user/data
+
+            # Dockerデーモン起動（再起動や初回でも耐えるように）
+            sudo systemctl start docker || sudo service docker start
+
             # 1) S3 から最新データを取得
             aws s3 cp s3://my-titanic-data-bucket-2025/titanic/train.csv /home/ec2-user/data/train.csv
             aws s3 cp s3://my-titanic-data-bucket-2025/titanic/test.csv  /home/ec2-user/data/test.csv
 
             # 2) Docker イメージをプル＆実行
-            docker pull 0nulu/titanic-ml-pipeline:latest
-            docker run --rm \
+            sudo docker pull 0nulu/titanic-ml-pipeline:latest
+            sudo docker run --rm \
               -v /home/ec2-user/data:/app/data \
               0nulu/titanic-ml-pipeline:latest
